@@ -20,6 +20,8 @@ const ROLES = [
 ];
 
 export default function LoginScreen({ onLogin }) {
+  // ĐỊNH NGHĨA LINK API TỰ ĐỘNG CHUYỂN ĐỔI GIỮA LOCAL VÀ RENDER
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
   const [isRegister, setIsRegister] = useState(false); // Chuyển đổi Đăng nhập / Đăng ký
   const [role, setRole] = useState('BRAND');
   const [username, setUsername] = useState('');
@@ -58,7 +60,7 @@ export default function LoginScreen({ onLogin }) {
     setError('');
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8080/api/login', {
+      const res = await fetch(`${API_URL}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: username.trim(), password, role })
@@ -80,7 +82,7 @@ export default function LoginScreen({ onLogin }) {
     setError('');
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8080/api/register', {
+      const res = await fetch(`${API_URL}/api/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

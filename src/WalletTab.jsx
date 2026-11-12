@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Wallet, ArrowUpRight, Clock, CheckCircle2, XCircle, AlertCircle, CreditCard, Building2, Save, X } from 'lucide-react';
 
 export default function WalletTab({ auth, reviewers, participations, campaigns, notify, refreshData }) {
+  // ĐỊNH NGHĨA LINK API TỰ ĐỘNG CHUYỂN ĐỔI GIỮA LOCAL VÀ RENDER
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
   // 1. Lấy thông tin reviewer hiện tại
   const reviewer = reviewers.find(r => r.id === auth.entityId) || reviewers[0];
   
@@ -86,7 +88,7 @@ export default function WalletTab({ auth, reviewers, participations, campaigns, 
 
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8080/api/payouts', {
+      const res = await fetch(`${API_URL}/api/payouts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -131,7 +133,7 @@ export default function WalletTab({ auth, reviewers, participations, campaigns, 
 
     setBankLoading(true);
     try {
-      const res = await fetch(`http://localhost:8080/api/reviewers/${reviewer.id}`, {
+      const res = await fetch(`${API_URL}/api/reviewers/${reviewer.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
